@@ -1,4 +1,4 @@
-package payroll.nonrest;
+package payroll;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
