@@ -24,15 +24,14 @@ class Employee {
   private String name;
   private String role;
 
-  // Empty constructor is required.
   Employee() {}
 
   /**
-   * custom constructor is created when we need to
+   * Custom constructor is created when we need to
    * create a new instance, but don’t yet have an id.
    */
   Employee(String name, String role) {
-    this.name = name;
-    this.role = role;
+    name = this.name;
+    role = this.role;
   }
 }
