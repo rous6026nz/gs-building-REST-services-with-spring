@@ -21,8 +21,8 @@ import javax.persistence.Id;
 class Employee {
 
   private @Id @GeneratedValue Long id;
-  private String name;
-  private String role;
+  public String name;
+  public String role;
 
   Employee() {}
 
@@ -31,7 +31,7 @@ class Employee {
    * create a new instance, but don’t yet have an id.
    */
   Employee(String name, String role) {
-    name = this.name;
-    role = this.role;
+    this.name = name;
+    this.role = role;
   }
 }
