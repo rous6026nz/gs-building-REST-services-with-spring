@@ -20,9 +20,9 @@ import javax.persistence.Id;
 @Entity
 class Employee {
 
-  @GeneratedValue @Id Long id;
-  String name;
-  String role;
+  private @Id @GeneratedValue Long id;
+  private String name;
+  private String role;
 
   Employee() {}
 
