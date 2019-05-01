@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class EmployeeController {
 
-  public final EmployeeRepository repository;
+  private final EmployeeRepository repository;
+  private final EmployeeResourceAssembler assembler;
 
-  EmployeeController(EmployeeRepository repository) {
+  /**
+   * Inject the Employee repository and assembler.
+   */
+  EmployeeController(EmployeeRepository repository, EmployeeResourceAssembler assembler) {
     this.repository = repository;
+    this.assembler = assembler;
   }
 
   // Aggregate root
@@ -39,15 +44,7 @@ class EmployeeController {
      * using the Java stream API.
      */
     List<Resource<Employee>> employees = repository.findAll().stream()
-      .map(employee -> new Resource<>(employee,
-        /**
-         * Builds a link to the EmployeeController's one() method, and flag it as a self link.
-         */
-        linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
-        /**
-         * Builds a link to the aggregate root, all(), and call it "employees".
-         */
-        linkTo(methodOn(EmployeeController.class).all()).withRel("employees")))
+      .map(assembler::toResource)
       .collect(Collectors.toList());
 
     return new Resources<>(employees,
@@ -67,15 +64,7 @@ class EmployeeController {
     Employee employee = repository.findById(id)
       .orElseThrow(() -> new EmployeeNotFoundException(id));
 
-    return new Resource<>(employee,
-      /**
-       * Builds a link to the EmployeeController's one() method, and flag it as a self link.
-       */
-      linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-      /**
-       * Builds a link to the aggregate root, all(), and call it "employees".
-       */
-      linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
+    return assembler.toResource(employee);
   }
 
   // Add new employee record
