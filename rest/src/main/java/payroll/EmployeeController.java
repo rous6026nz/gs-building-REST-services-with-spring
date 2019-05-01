@@ -2,11 +2,14 @@ package payroll;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,8 +71,19 @@ class EmployeeController {
 
   // Add new employee record
   @PostMapping("/employees")
-  Employee newEmployee(@RequestBody Employee newEmployee) {
-    return repository.save(newEmployee);
+  ResponseEntity newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
+    /**
+     * The new Employee object is saved as before, but is wrapped using the EmployeeResourceAssembler.
+     */
+    Resource<Employee> resource = assembler.toResource(repository.save(newEmployee));
+    /**
+     * ResponseEntity is used to create an HTTP 201 Created status message. This type of response typically
+     * includes a Location response header, and we use the newly formed link to return the resource-based
+     * version of the saved object.
+     */
+    return ResponseEntity
+      .created(new URI(resource.getId().expand().getHref()))
+      .body(resource);
   }
 
   // Update employee record
