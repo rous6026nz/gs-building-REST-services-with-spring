@@ -13,17 +13,13 @@ The RESTful implementation also contains a feature branch `feature/restful--with
 >What needs to be done to make the REST architectural style clear on the notion that hypertext is a constraint? In other words, if the engine of application state (and hence the API) is not being driven by hypertext, then it cannot be RESTful and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
 >_~Roy Fielding_
 
----
-
 ## Development Environment
 
 This project uses Java, the Spring Framework and Maven as the build tool.
 
----
-
 ## Interrogating The Service
 
-To explore the services make sure you are in the right branch - `master` for `nonrest` or `restful` for `restful`. Then `cd` into the service folder you wish to interrogate `nonrest` or `restful`, and run the application `mvn clean spring-boot:run`.
+To explore the services simply `cd` into the service folder you wish to interrogate `nonrest` or `rest`, then run the application `mvn clean spring-boot:run`.
 
 To interrogate the services, you can use an API development tool such as [Postman](https://www.getpostman.com/) and explore the service by navigating to `http://localhost:8080/employees`.
 
