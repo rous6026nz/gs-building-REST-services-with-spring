@@ -54,7 +54,6 @@ class EmployeeController {
       linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
   }
 
-
   /**
    * Get employee by ID:
    * @Return Resource<Employee> - a generic container that includes not only the data but a collection of links.
