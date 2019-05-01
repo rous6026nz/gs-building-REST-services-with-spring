@@ -71,7 +71,7 @@ class EmployeeController {
 
   // Add new employee record
   @PostMapping("/employees")
-  ResponseEntity newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
+  ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
     /**
      * The new Employee object is saved as before, but is wrapped using the EmployeeResourceAssembler.
      */
@@ -88,8 +88,8 @@ class EmployeeController {
 
   // Update employee record
   @PutMapping("/employees/{id}")
-  Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
-    return repository.findById(id)
+  ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) throws URISyntaxException {
+    Employee updatedEmployee = repository.findById(id)
       .map(employee -> {
         employee.setName(newEmployee.getName());
         employee.setRole(newEmployee.getRole());
@@ -99,6 +99,12 @@ class EmployeeController {
         newEmployee.setId(id);
         return repository.save(newEmployee);
       });
+
+    Resource<Employee> resource = assembler.toResource(updatedEmployee);
+
+    return ResponseEntity
+      .created(new URI(resource.getId().expand().getHref()))
+      .body(resource);
   }
 
   // Delete employee record
