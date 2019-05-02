@@ -19,7 +19,7 @@ This project uses Java, the Spring Framework and Maven as the build tool.
 
 ## Interrogating The Service
 
-To explore the services make sure you are in the right branch - `master` for `nonrest` or `restful` for `restful`. Then `cd` into the service folder you wish to interrogate `nonrest` or `restful`, and run the application `mvn clean spring-boot:run`.
+To explore the services make sure you are in the right branch - `master` for `nonrest` or `feature/restful` for `restful`. Then `cd` into the service folder you wish to interrogate `nonrest` or `restful`, and run the application `mvn clean spring-boot:run`.
 
 To interrogate the services, you can use an API development tool such as [Postman](https://www.getpostman.com/) and explore the service by navigating to `http://localhost:8080/employees`.
 
@@ -37,3 +37,154 @@ Alternatively, you can use a command line tool called [CURL](https://curl.haxx.s
 
 - DELETE
   - `curl -X DELETE localhost:8080/employees/{id}`
+
+## API Response Model
+
+The following documents how the expected responses for each service call should look. I have broken this section into Non-RESTful and RESTful to help illustrate the key differences between the two.
+
+### Non-RESTful Service
+
+GET: Non-RESTful response retreiving all Employee records `http://localhost:8080/employees`:
+
+```javascript
+[
+  {
+    "id": 1,
+    "name": "Bilbo Baggins",
+    "role": "burglar"
+  },
+  {
+    "id": 2,
+    "name": "Frodo Baggins",
+    "role": "thief"
+  }
+]
+```
+
+GET: Non-RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`:
+
+```javascript
+{
+  "id": 1,
+  "name": "Bilbo Baggins",
+  "role": "burglar"
+}
+```
+
+POST: Non-RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`:
+
+```javascript
+{
+  "id":3,
+  "name":"Zaine Kingi",
+  "role":"Space Ranger"
+}
+```
+
+PUT: Non-RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`:
+
+```javascript
+{
+  "id":3,
+  "name":"Buzz Lightyear",
+  "role":"Space Ranger"
+}
+```
+
+### RESTful Service
+
+GET: RESTful response retreiving all Employee records `http://localhost:8080/employees`:
+
+```javascript
+{
+  "_embedded": {
+    "employeeList": [
+      {
+        "id": 1,
+        "name": "Bilbo Baggins",
+        "role": "burglar",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/employees/1"
+          },
+          "employees": {
+            "href": "http://localhost:8080/employees"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Frodo Baggins",
+        "role": "thief",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/employees/2"
+          },
+          "employees": {
+            "href": "http://localhost:8080/employees"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+```
+
+GET: RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`:
+
+```javascript
+{
+  "id": 1,
+  "name": "Bilbo Baggins",
+  "role": "burglar",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees/1"
+    },
+    "employees": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+```
+
+POST: RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`:
+
+```javascript
+{
+  "id": 3,
+  "name": "Zaine Kingi",
+  "role": "Space Ranger",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees/3"
+    },
+    "employees": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+```
+
+PUT: RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`:
+
+```javascript
+{
+  "id": 3,
+  "name": "Buzz Lightyear",
+  "role": "Space Ranger",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/employees/3"
+    },
+    "employees": {
+      "href": "http://localhost:8080/employees"
+    }
+  }
+}
+```
