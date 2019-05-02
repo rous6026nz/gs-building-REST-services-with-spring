@@ -99,6 +99,16 @@ _HTTP Response_: 200
 }
 ```
 
+DELETE: Non-RESTful response deleting an Employee record `curl -X DELETE localhost:8080/employees/3`
+
+_HTTP Response_: 200
+
+```javascript
+
+```
+
+---
+
 ### RESTful Service
 
 GET: RESTful response retreiving all Employee records `http://localhost:8080/employees`
@@ -203,4 +213,12 @@ _HTTP Response_: 201
     }
   }
 }
+```
+
+DELETE: RESTful response deleting an Employee record `curl -X DELETE localhost:8080/employees/3`
+
+_HTTP Response_: 204
+
+```javascript
+
 ```
