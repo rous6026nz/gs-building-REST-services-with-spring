@@ -19,7 +19,7 @@ This project uses Java, the Spring Framework and Maven as the build tool.
 
 ## Interrogating The Service
 
-To explore the services make sure you are in the right branch - `master` for `nonrest` or `feature/restful` for `restful`. Then `cd` into the service folder you wish to interrogate `nonrest` or `restful`, and run the application `mvn clean spring-boot:run`.
+To explore the services make sure you are in the right branch - `feature/nonrest` or `feature/restful`. Then `cd` into the service folder you wish to interrogate and run the application `mvn clean spring-boot:run`.
 
 To interrogate the services, you can use an API development tool such as [Postman](https://www.getpostman.com/) and explore the service by navigating to `http://localhost:8080/employees`.
 
