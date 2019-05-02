@@ -103,6 +103,7 @@ class EmployeeController {
   /**
    * Delete an Employee record
    * @param id
+   * @return HTTP 204 No Content
    */
   @DeleteMapping("/employees/{id}")
   ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
