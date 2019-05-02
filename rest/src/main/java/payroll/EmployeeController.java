@@ -32,34 +32,24 @@ class EmployeeController {
     this.assembler = assembler;
   }
 
-  // Aggregate root
-  @GetMapping("/employees")
-
   /**
-   * Resources:
-   * A Spring HATEOAS container aimed at encapsulating collections of employee resources,
-   * and also provides the functionality to include links.
+   * Get all Employee records
+   * @return Resources list of Employees
    */
+  @GetMapping("/employees")
   Resources<Resource<Employee>> all() {
-
-    /**
-     * Fetchs all the employees, but then transform them into a list of Resource<Employee> objects
-     * using the Java stream API.
-     */
     List<Resource<Employee>> employees = repository.findAll().stream()
       .map(assembler::toResource)
       .collect(Collectors.toList());
 
     return new Resources<>(employees,
-      /**
-       * Builds a link to the aggregate root top-level.
-       */
       linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
   }
 
   /**
-   * Get employee by ID:
-   * @Return Resource<Employee> - a generic container that includes not only the data but a collection of links.
+   * Get Employee by ID
+   * @param id
+   * @return Employee resource
    */
   @GetMapping("/employees/{id}")
   Resource<Employee> one(@PathVariable Long id) {
@@ -69,24 +59,27 @@ class EmployeeController {
     return assembler.toResource(employee);
   }
 
-  // Add new employee record
+  /**
+   * Add new Employee record
+   * @param newEmployee
+   * @return Employee resource
+   * @throws URISyntaxException
+   */
   @PostMapping("/employees")
   ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
-    /**
-     * The new Employee object is saved as before, but is wrapped using the EmployeeResourceAssembler.
-     */
     Resource<Employee> resource = assembler.toResource(repository.save(newEmployee));
-    /**
-     * ResponseEntity is used to create an HTTP 201 Created status message. This type of response typically
-     * includes a Location response header, and we use the newly formed link to return the resource-based
-     * version of the saved object.
-     */
     return ResponseEntity
       .created(new URI(resource.getId().expand().getHref()))
       .body(resource);
   }
 
-  // Update employee record
+  /**
+   * Update/Replace Employee record
+   * @param newEmployee
+   * @param id
+   * @return Employee resource
+   * @throws URISyntaxException
+   */
   @PutMapping("/employees/{id}")
   ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) throws URISyntaxException {
     Employee updatedEmployee = repository.findById(id)
@@ -107,9 +100,14 @@ class EmployeeController {
       .body(resource);
   }
 
-  // Delete employee record
+  /**
+   * Delete an Employee record
+   * @param id
+   */
   @DeleteMapping("/employees/{id}")
-  void deleteEmployee(@PathVariable Long id) {
+  ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
     repository.deleteById(id);
+
+    return ResponseEntity.noContent().build();
   }
 }
