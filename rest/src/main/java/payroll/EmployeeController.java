@@ -20,46 +20,34 @@ class EmployeeController {
 
   public final EmployeeRepository repository;
 
+  /**
+   * Inject the Employee repository
+   * @param repository
+   */
   EmployeeController(EmployeeRepository repository) {
     this.repository = repository;
   }
 
-  // Aggregate root
-  @GetMapping("/employees")
-
   /**
-   * Resources:
-   * A Spring HATEOAS container aimed at encapsulating collections of employee resources,
-   * and also provides the functionality to include links.
+   * Get all Employee records
+   * @return Employee resources list
    */
+  @GetMapping("/employees")
   Resources<Resource<Employee>> all() {
-
-    /**
-     * Fetchs all the employees, but then transform them into a list of Resource<Employee> objects
-     * using the Java stream API.
-     */
     List<Resource<Employee>> employees = repository.findAll().stream()
       .map(employee -> new Resource<>(employee,
-        /**
-         * Builds a link to the EmployeeController's one() method, and flag it as a self link.
-         */
         linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
-        /**
-         * Builds a link to the aggregate root, all(), and call it "employees".
-         */
         linkTo(methodOn(EmployeeController.class).all()).withRel("employees")))
       .collect(Collectors.toList());
 
     return new Resources<>(employees,
-      /**
-       * Builds a link to the aggregate root top-level.
-       */
       linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
   }
 
   /**
-   * Get employee by ID:
-   * @Return Resource<Employee> - a generic container that includes not only the data but a collection of links.
+   * Get an Employee record by ID
+   * @param id
+   * @return Employee resource
    */
   @GetMapping("/employees/{id}")
   Resource<Employee> one(@PathVariable Long id) {
@@ -67,23 +55,24 @@ class EmployeeController {
       .orElseThrow(() -> new EmployeeNotFoundException(id));
 
     return new Resource<>(employee,
-      /**
-       * Builds a link to the EmployeeController's one() method, and flag it as a self link.
-       */
       linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-      /**
-       * Builds a link to the aggregate root, all(), and call it "employees".
-       */
       linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
   }
 
-  // Add new employee record
+  /**
+   * Add new Employee record
+   * @param newEmployee
+   */
   @PostMapping("/employees")
   Employee newEmployee(@RequestBody Employee newEmployee) {
     return repository.save(newEmployee);
   }
 
-  // Update employee record
+  /**
+   * Replace an Employee record
+   * @param newEmployee
+   * @param id
+   */
   @PutMapping("/employees/{id}")
   Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
     return repository.findById(id)
@@ -98,7 +87,10 @@ class EmployeeController {
       });
   }
 
-  // Delete employee record
+  /**
+   * Delete an Employee record
+   * @param id
+   */
   @DeleteMapping("/employees/{id}")
   void deleteEmployee(@PathVariable Long id) {
     repository.deleteById(id);
