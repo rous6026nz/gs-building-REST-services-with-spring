@@ -44,7 +44,9 @@ The following documents how the expected responses for each service call should 
 
 ### Non-RESTful Service
 
-GET: Non-RESTful response retreiving all Employee records `http://localhost:8080/employees`:
+GET: Non-RESTful response retreiving all Employee records `http://localhost:8080/employees`
+
+_HTTP Response_: 200
 
 ```javascript
 [
@@ -61,7 +63,9 @@ GET: Non-RESTful response retreiving all Employee records `http://localhost:8080
 ]
 ```
 
-GET: Non-RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`:
+GET: Non-RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`
+
+_HTTP Response_: 200
 
 ```javascript
 {
@@ -71,7 +75,9 @@ GET: Non-RESTful response retreiving an Employee record by ID `http://localhost:
 }
 ```
 
-POST: Non-RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`:
+POST: Non-RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`
+
+_HTTP Response_: 200
 
 ```javascript
 {
@@ -81,7 +87,9 @@ POST: Non-RESTful response adding a new Employee record `curl -X POST localhost:
 }
 ```
 
-PUT: Non-RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`:
+PUT: Non-RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`
+
+_HTTP Response_: 200
 
 ```javascript
 {
@@ -93,7 +101,9 @@ PUT: Non-RESTful response replacing an Employee record `curl -X PUT localhost:80
 
 ### RESTful Service
 
-GET: RESTful response retreiving all Employee records `http://localhost:8080/employees`:
+GET: RESTful response retreiving all Employee records `http://localhost:8080/employees`
+
+_HTTP Response_: 201
 
 ```javascript
 {
@@ -135,7 +145,9 @@ GET: RESTful response retreiving all Employee records `http://localhost:8080/emp
 }
 ```
 
-GET: RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`:
+GET: RESTful response retreiving an Employee record by ID `http://localhost:8080/employees/1`
+
+_HTTP Response_: 201
 
 ```javascript
 {
@@ -153,7 +165,9 @@ GET: RESTful response retreiving an Employee record by ID `http://localhost:8080
 }
 ```
 
-POST: RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`:
+POST: RESTful response adding a new Employee record `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Zaine Kingi", "role": "Space Ranger"}'`
+
+_HTTP Response_: 201
 
 ```javascript
 {
@@ -171,7 +185,9 @@ POST: RESTful response adding a new Employee record `curl -X POST localhost:8080
 }
 ```
 
-PUT: RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`:
+PUT: RESTful response replacing an Employee record `curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Buzz Lightyear", "role": "Space Ranger"}'`
+
+_HTTP Response_: 201
 
 ```javascript
 {
