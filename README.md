@@ -4,9 +4,9 @@ A small learning by coding project based off the Spring.io tutorial [Building RE
 
 ## Introduction
 
-This project contains 2 implementations to help demonstrate the key differences between an [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) `nonrest` - and a RESTful service `restful`.
+This project contains 2 implementations to help demonstrate the key differences between an [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) `nonrest` - and a RESTful service `rest`.
 
-The RESTful implementation also contains a feature branch `feature/restful--with-resource-assembler` which illustrates the process of implementing an assembler class and refactoring the current implementation of a RESTful service to use a resource assembler. This branch also demonstrates how to upgrade a RESTful service, while maintaining backwards compatibility with all clients.
+There is also a feature branch implemented based off the `feature/restful` branch called `feature/restful--with-resource-assembler` which illustrates the process of implementing a resource assembler class and refactoring the current implementation of a RESTful service to use a resource assembler. This branch also demonstrates how to upgrade a RESTful service, while maintaining backwards compatibility with all clients.
 
 >I am getting frustrated by the number of people calling any HTTP-based interface a REST API. Today’s example is the SocialSite REST API. That is RPC. It screams RPC. There is so much coupling on display that it should be given an X rating.
 >
@@ -19,7 +19,7 @@ This project uses Java, the Spring Framework and Maven as the build tool.
 
 ## Interrogating The Service
 
-To explore the services make sure you are in the right branch - `master` for `nonrest` or `feature/restful` for `restful`. Then `cd` into the service folder you wish to interrogate `nonrest` or `restful`, and run the application `mvn clean spring-boot:run`.
+To explore the services you can `cd` into the service directory you wish to interrogate `nonrest` or `rest`, and run the application using `mvn clean spring-boot:run`.
 
 To interrogate the services, you can use an API development tool such as [Postman](https://www.getpostman.com/) and explore the service by navigating to `http://localhost:8080/employees`.
 
@@ -98,6 +98,16 @@ _HTTP Response_: 200
   "role":"Space Ranger"
 }
 ```
+
+DELETE: Non-RESTful response deleting an Employee record `curl -X DELETE localhost:8080/employees/3`
+
+_HTTP Response_: 200
+
+```javascript
+
+```
+
+---
 
 ### RESTful Service
 
@@ -203,4 +213,12 @@ _HTTP Response_: 201
     }
   }
 }
+```
+
+DELETE: RESTful response deleting an Employee record `curl -X DELETE localhost:8080/employees/3`
+
+_HTTP Response_: 204 No Content
+
+```javascript
+
 ```

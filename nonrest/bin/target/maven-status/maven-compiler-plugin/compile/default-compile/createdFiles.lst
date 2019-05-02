@@ -1,7 +1,0 @@
-payroll/PayrollApplication.class
-payroll/EmployeeController.class
-payroll/EmployeeRepository.class
-payroll/Employee.class
-payroll/EmployeeNotFoundException.class
-payroll/LoadDatabase.class
-payroll/EmployeeNotFoundAdvice.class
