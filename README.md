@@ -217,7 +217,7 @@ _HTTP Response_: 201
 
 DELETE: RESTful response deleting an Employee record `curl -X DELETE localhost:8080/employees/3`
 
-_HTTP Response_: 204
+_HTTP Response_: 204 No Content
 
 ```javascript
 
