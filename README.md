@@ -31,9 +31,11 @@ Alternatively, you can use a command line tool called [CURL](https://curl.haxx.s
 
 - POST
   - `curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Joe Blog", "role": "Bus Driver"}'`
+  - Windows: `curl -X POST localhost:8080/employees -H "Content-type:application/json" -d "{\"name\": \"Joe Blog\", \"role\": \"Bus Driver\"}"`
 
 - PUT
   - `curl -X PUT localhost:8080/employees/{id} -H 'Content-type:application/json' -d '{"name": "Joe Blog", "role": "Bus Inspector"}'`
+  - Windows: `curl -X PUT localhost:8080/employees/{id} -H "Content-type:application/json" -d "{\"name\": \"Joe Blog\", \"role\": \"Bus Inspector\"}"`
 
 - DELETE
   - `curl -X DELETE localhost:8080/employees/{id}`
